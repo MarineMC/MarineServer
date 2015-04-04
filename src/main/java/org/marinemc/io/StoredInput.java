@@ -1,10 +1,17 @@
 package org.marinemc.io;
 
-public class BufferedInput extends AbstractInput {
+public class StoredInput extends AbstractInput {
 	int pos;
 	
 	byte[] buffer;
 	
+	public void back() {
+		--pos;
+	}
+	
+	public int bytesRemaining() {
+		return buffer.length - pos;
+	}
 	
 	@Override
 	public byte readByte() {

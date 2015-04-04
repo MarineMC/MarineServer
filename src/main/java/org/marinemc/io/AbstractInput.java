@@ -1,5 +1,7 @@
 package org.marinemc.io;
 
+import java.nio.charset.StandardCharsets;
+
 public abstract class AbstractInput implements ByteInput {
 	
 	@Override
@@ -12,6 +14,10 @@ public abstract class AbstractInput implements ByteInput {
 		return (short) (readByte() << 8 | readByte() & 0xff);
 	}
 
+    public int readUnsignedShort() {
+        return (((readByte() & 0xff) << 8) | (readByte() & 0xff));
+    }
+	
 	@Override
 	public int readInt() {
 		return (readByte() & 0xff) << 24 | (readByte() & 0xff) << 16
@@ -39,6 +45,11 @@ public abstract class AbstractInput implements ByteInput {
 		return Double.longBitsToDouble(readLong());
 	}
 
+	@Override
+	public String readString() {
+		return new String(read(readVarInt()), StandardCharsets.UTF_8);
+	}
+	
 	@Override
 	public int readVarInt() {
 		int out = 0;

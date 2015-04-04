@@ -20,6 +20,8 @@ public interface ByteInput {
 	 */
 	public short readShort();
 	
+	public int readUnsignedShort();
+	
 	/**
 	 * Reads a integer
 	 * @return The integer that have been read.
@@ -57,4 +59,10 @@ public interface ByteInput {
 	 */
 	public byte[] read(int amount);
 	
+	
+	/**
+	 * Reads first a VarInt for the length of the string then the string it self.
+	 */
+	
+	public String readString();
 }

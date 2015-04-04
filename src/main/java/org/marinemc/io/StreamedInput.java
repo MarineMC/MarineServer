@@ -3,6 +3,7 @@ package org.marinemc.io;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.ref.WeakReference;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 public class StreamedInput implements ByteInput {
@@ -44,6 +45,11 @@ public class StreamedInput implements ByteInput {
 		byte[] x = readNotNull(2);
 		return (short) (x[0] << 8 | x[1] & 0xff); 
 	}
+	
+    public int readUnsignedShort() {
+		byte[] x = readNotNull(2);
+        return (((x[0] & 0xff) << 8) | (x[1] & 0xff));
+    }
 
 	@Override
 	public int readInt() {
@@ -106,6 +112,11 @@ public class StreamedInput implements ByteInput {
 		}
 		
 		return bytes;
+	}
+
+	@Override
+	public String readString() {
+		return new String(read(readVarInt()), StandardCharsets.UTF_8);
 	}
 	
 }
